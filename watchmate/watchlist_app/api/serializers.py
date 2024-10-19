@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from watchlist_app.models import WatchList,StreamPlateform
+from watchlist_app.models import WatchList,StreamPlateform,Review
 from django.utils.timezone import now
 
 
@@ -7,11 +7,19 @@ from django.utils.timezone import now
 
 # By ModelSerializer
 
+class ReviewSerializer(serializers.ModelSerializer):   
+    class Meta:
+        model=Review
+        exclude=('watchlist',)
+        # fields="__all__"
+
+
+
 class WatchlistSerializer(serializers.ModelSerializer):    
+    reviews=ReviewSerializer(many=True,read_only=True)
     class Meta:
         model=WatchList
         fields="__all__"
-        
         
                
 class StreamPlateformSerializer(serializers.ModelSerializer):
