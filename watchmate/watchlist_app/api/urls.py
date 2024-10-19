@@ -11,7 +11,7 @@ router=DefaultRouter()
 router.register('stream', StreamPlateformView, basename='streamplateform')
 
 urlpatterns=[
-    path('',WatchListApiView.as_view(),name='movies'),
+    path('movielist/',WatchListApiView.as_view(),name='movies'),
     path('movie/<int:pk>/',WatchDetailApiView.as_view(),name='movie'),
     
     path('',include(router.urls)),
