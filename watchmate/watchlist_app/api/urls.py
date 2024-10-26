@@ -11,8 +11,8 @@ router=DefaultRouter()
 router.register('stream', StreamPlateformView, basename='streamplateform')
 
 urlpatterns=[
-    path('movielist/',WatchListApiView.as_view(),name='movies'),
-    path('movie/<int:pk>/',WatchDetailApiView.as_view(),name='movie'),
+    path('list/',WatchListApiView.as_view(),name='movies'),
+    path('<int:pk>/',WatchDetailApiView.as_view(),name='movie'),
     
     path('',include(router.urls)),
      
@@ -23,7 +23,7 @@ urlpatterns=[
     # path('reviews/', ReviewList.as_view(), name='reviews'),
     # path('review/<int:pk>/', ReviewDetail.as_view(), name='reviews'),
     
-    path('stream/<int:pk>/review-create', ReviewCreate.as_view(), name='review-create'),
-    path('stream/<int:pk>/review', ReviewList.as_view(), name='stream-review'),
-    path('stream/review/<int:pk>', ReviewDetail.as_view(), name='review-detail'),
+    path('<int:pk>/review-create/', ReviewCreate.as_view(), name='review-create'),
+    path('<int:pk>/reviews/', ReviewList.as_view(), name='stream-review'),
+    path('review/<int:pk>/', ReviewDetail.as_view(), name='review-detail'),
 ]
