@@ -10,10 +10,14 @@ class StreamPlateform(models.Model):
     
     def __str__(self)->str:
         return f"Plateform - {self.name}"
-    
+
+def upload_to(instance, filename):
+    return 'movieImages/{filename}'.format(filename=filename)
+
     
 class WatchList(models.Model):
     title=models.CharField(max_length=50)
+    # image = models.FileField(upload_to=upload_to,null=True,blank=True)
     storyline=models.CharField(max_length=200)
     plateform=models.ForeignKey(StreamPlateform, on_delete=models.CASCADE,related_name='watchlist')
     avg_rating=models.FloatField(default=0)

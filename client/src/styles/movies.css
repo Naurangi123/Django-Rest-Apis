@@ -1,0 +1,96 @@
+/* General container */
+.stream-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+  }
+  
+  .stream-details {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .divider {
+    margin: 10px 0;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .stream-title {
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .stream-description {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+    margin-top: 10px;
+  }
+  
+  .watchlist-heading,
+  .reviews-heading {
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 20px;
+  }
+  
+  .watchlist-item {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .item-title,
+  .item-storyline,
+  .item-rating {
+    margin: 10px 0;
+    font-size: 1rem;
+  }
+  
+  .reviews-heading {
+    font-size: 1.3rem;
+    color: #333;
+  }
+  
+  .review-item {
+    background-color: #e9ecef;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 10px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .review-description,
+  .review-user,
+  .review-rating {
+    margin: 8px 0;
+    font-size: 1rem;
+  }
+  
+  .no-reviews,
+  .no-watchlist {
+    font-size: 1rem;
+    color: #888;
+  }
+  
+  .stream-website {
+    font-size: 1rem;
+    margin-top: 20px;
+    color: #007bff;
+  }
+  
+  .stream-website a {
+    text-decoration: none;
+  }
+  
+  .stream-website a:hover {
+    text-decoration: underline;
+  }
+  
+  
+  

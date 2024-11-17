@@ -1,5 +1,6 @@
 
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,6 +32,7 @@ INSTALLED_APPS = [
     'watchlist_app',
     'auth_app',
     'rest_framework.authtoken',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -41,6 +43,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'watchmate.urls'
@@ -69,20 +73,20 @@ REST_FRAMEWORK = {
     
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # 'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     
     # 'DEFAULT_THROTTLE_CLASSES': [
     #     'rest_framework.throttling.AnonRateThrottle',
     #     'rest_framework.throttling.UserRateThrottle'
     # ],
-    'DEFAULT_THROTTLE_RATES': {
-        'anon': '5/day',
-        'user': '10/day',
-        'review-create': '1/day',
-        'review-list': '1/day',
-    },
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'anon': '5/day',
+    #     'user': '10/day',
+    #     'review-create': '1/day',
+    #     'review-list': '1/day',
+    # },
     
 }
 
@@ -139,12 +143,22 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# SIMPLE_JWT = {
-#     "ROTATE_REFRESH_TOKENS": True,
-# }
+SIMPLE_JWT = {
+    "ROTATE_REFRESH_TOKENS": True,
+}
+CORS_ALLOW_CREDENTIALS = True
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]

@@ -1,14 +1,14 @@
 from django.urls import path,include
 from rest_framework.routers import DefaultRouter
 # from . .api import views
-from watchlist_app.api.views import (WatchListApiView,WatchDetailApiView,StreamPlateformView,StreamPlateformApiView,
+from watchlist_app.views import (WatchListApiView,WatchDetailApiView,StreamPlateformView,StreamPlateformApiView,
                                      StreamDetailApiView,ReviewList,ReviewDetail,ReviewCreate,UserReview)
 
 
 
 router=DefaultRouter()
 
-router.register('stream', StreamPlateformView, basename='streamplateform')
+router.register('streams', StreamPlateformView, basename='streamplateform')
 
 urlpatterns=[
     path('list/',WatchListApiView.as_view(),name='movies'),
@@ -17,7 +17,7 @@ urlpatterns=[
     path('',include(router.urls)),
      
     # path('streams/', StreamPlateformApiView.as_view(), name='streams'),
-    # path('stream/<int:pk>/', StreamDetailApiView.as_view(), name='stream-detail'),
+    # path('streams/<int:pk>/', StreamDetailApiView.as_view(), name='stream-detail'),
     
     
     # path('reviews/', ReviewList.as_view(), name='reviews'),
