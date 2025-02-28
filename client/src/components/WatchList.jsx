@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/movies.css'
-import api from '../api';
+import api from '../services/api';
+import img from '../assests/images/img.jpg';
 
 const WatchList = () => {
   const [watchlists, setWatchlists] = useState([]); 
@@ -13,7 +14,6 @@ const WatchList = () => {
     try {
       const response = await api.get('/watch/list');
       setWatchlists(response.data);
-      console.log(response.data);
       setLoading(false);
     } catch (error) {
       setError(error.message);
@@ -33,26 +33,27 @@ const WatchList = () => {
     return <div>Error: {error}</div>; 
   }
   return (
-    <div className="stream-container">
-          <h3 className="watchlist-heading">Watchlist:</h3>
+    <div className="watchlist-container">
           {watchlists.length > 0 ? (
             watchlists.map(item => (
               <div key={item.id} className="watchlist-item" onClick={(id) => handleMovieClick(item.id)}>
-                <p className="item-title"><strong>Title:</strong> {item.title}</p>
-                <p className="item-storyline"><strong>Storyline:</strong> {item.storyline}</p>
+                <h1 className="item-title"><strong>Title:</strong>{item.title}</h1>
+                <div className='img-container'>
+                  <img src={img} alt="movie_imge" />
+                </div>
+                <p className="item-storyline"><strong>Storyline:</strong>{item.storyline}</p>
                 <p className="item-rating"><strong>Average Rating:</strong> {item.avg_rating}/5</p>
                 <h4 className="reviews-heading">Reviews:</h4>
                 {item.reviews && item.reviews.length > 0 ? (
                   item.reviews.map(review => (
                     <div key={review.id} className="review-item">
                       <p className="review-description"><strong>Description:</strong> {review.description}</p>
-                      <p className="review-user"><strong>Review User:</strong> {review.review_user}</p>
-                      <p className="review-rating"><strong>Rating:</strong> {review.rating}/5</p>
                     </div>
                   ))
                 ) : (
                   <p className="no-reviews">No reviews for this movie.</p>
                 )}
+                <p className="reviews-btn" onClick={(id) => handleMovieClick(item.id)}>Leave Review</p>
               </div>
             ))
           ) : (

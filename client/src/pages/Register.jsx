@@ -1,9 +1,10 @@
 import React from 'react'
 import { useState } from 'react'
 import { useNavigate} from 'react-router-dom'
-import api from '../api'
+import api from '../services/api'
 import { ACCESS_TOKEN,REFRESH_TOKEN } from '../constants'
-import Loader from '../components/Loader'
+import Loader from '../components/Loader';
+import '../styles/login.css';
 
 const Register = () => {
   const[username,setUsername]=useState("")
@@ -11,6 +12,7 @@ const Register = () => {
   const[password,setPassword]=useState("")
   const[password2,setPassword2]=useState("")
   const[loading,setloading]=useState(false)
+  const [error,setError]=useState(null)
   const navigate=useNavigate()
 
   const handleSubmit=async(e)=>{
@@ -19,22 +21,22 @@ const Register = () => {
     try {
         const res =await api.post("/account/api/register/",{username,email,password,password2})
         if(res.status===200){
-            localStorage.setItem(ACCESS_TOKEN,res.data.access)
-            localStorage.setItem(REFRESH_TOKEN,res.data.refresh)
+            sessionStorage.setItem(ACCESS_TOKEN,res.data.access)
+            sessionStorage.setItem(REFRESH_TOKEN,res.data.refresh)
             navigate('/')
         }else{
             navigate('/login')
         }
     } catch (error) {
-        alert(error.message)
+        setError(error.message)
     }
     finally{
         setloading(false)
     }
   }
-
+  if(error) return <p>{error.message}</p>
   return (
-    <div>
+    <div className='register'>
         <h1>Register</h1>
         <form onSubmit={handleSubmit} className='form-container'>
             <input 

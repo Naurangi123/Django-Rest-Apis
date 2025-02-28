@@ -1,47 +1,92 @@
-import {BrowserRouter,Routes,Route,Navigate} from 'react-router-dom'
-import Register from './pages/Register'
-import Login from './pages/Login'
-import NotFound from './pages/NotFound'
-import ProtectedRoute from './components/ProtectedRoute'
-import MovieList from './components/MovieList'
-import CreateStream from './components/CreateStream'
-import WatchList from './components/WatchList'
-import WatchDetail from './components/WatchDetail'
+import React, { Suspense, lazy, useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import {ACCESS_TOKEN} from './constants'
+import "./styles/base.css";
+import "./styles/login.css";
+
+// Lazily load components
+const Register = lazy(() => import('./pages/Register'));
+const Login = lazy(() => import('./pages/Login'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'));
+const MovieList = lazy(() => import('./components/MovieList'));
+const CreateStream = lazy(() => import('./components/CreateStream'));
+const WatchList = lazy(() => import('./components/WatchList'));
+const Profile = lazy(() => import('./components/Profile'));
+const WatchDetail = lazy(() => import('./components/WatchDetail'));
+const Navbar = lazy(() => import('./Layout/Navbar')); 
 
 
-function Logout(){
-  localStorage.clear()
-  return <Navigate to="/login" />
-}
+const Logout = () => {
+  sessionStorage.clear();
+  return <Navigate to="/login" />;
+};
 
-function RegisterAndLogout() {
-  localStorage.clear()
-  return <Register />
-}
+const RegisterAndLogout = () => {
+  sessionStorage.clear();
+  return <Register />;
+};
 
+const routes = [
+  { path: "/", element: <ProtectedRoute><MovieList /></ProtectedRoute> },
+  { path: "/watch", element: <ProtectedRoute><WatchList /></ProtectedRoute> },
+  { path: "/watch/:id", element: <ProtectedRoute><WatchDetail /></ProtectedRoute> },
+  { path: "/home", element: <ProtectedRoute><CreateStream /></ProtectedRoute> },
+  { path: "/profile", element: <ProtectedRoute><Profile /></ProtectedRoute> },
+  { path: "/login", element: <Login /> },
+  { path: "/register", element: <RegisterAndLogout /> },
+  { path: "/logout", element: <Logout /> },
+  { path: "*", element: <NotFound /> },
+];
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+
+  useEffect(() => {
+    const token = sessionStorage.getItem(ACCESS_TOKEN);
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  const loggedInUser = (status) => {
+    setIsAuthenticated(status);
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem(ACCESS_TOKEN);
+    setIsAuthenticated(false);
+  };
+
   return (
     <BrowserRouter>
-      <Routes>
-        <Route 
-        path="/" 
-        element={
-          <ProtectedRoute>
-            <MovieList />
-          </ProtectedRoute>
-        } 
-        />
-        <Route path="/watch" element={<WatchList />} />
-        <Route path="/watch/:id" element={<WatchDetail />} />
-        <Route path="/home" element={<CreateStream />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<RegisterAndLogout />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Navbar isAuthenticated={isAuthenticated} handleLogout={handleLogout} loggedInUser={loggedInUser} />
+        <Routes>
+          {routes.map((route, idx) => (
+            <Route key={idx} path={route.path} element={route.element} />
+          ))}
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
 
 export default App;
+
+
+// import Movies from './components/Movies'
+// import WatchLists from './components/WatchLists';
+
+// import React from 'react'
+// function App() {
+//   return (
+//     <>
+//     {/* <Movies/> */}
+//     <WatchLists/>
+//     </>
+//   );
+// }
+
+// export default App;

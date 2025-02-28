@@ -1,0 +1,50 @@
+.login,.register{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 50px auto;
+    width: 50%;
+    height: auto;
+    background-color: beige;
+}
+
+form{
+    margin: 50px;
+}
+.login>.form-container,.register>.form-container{
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    height: auto;
+    background-color: #e0cbcb;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.register>.form-container input[type="text"],input[type="password"],input[type="email"]{
+    margin-bottom: 10px;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    background-color: #fff;
+}
+.login>.form-container input[type="text"],input[type="password"],input[type="email"]{
+    margin-bottom: 10px;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    background-color: #fff;
+}
+button{
+    margin-top: 20px;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #287f31;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}

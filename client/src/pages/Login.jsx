@@ -1,9 +1,9 @@
-import React from 'react'
-import { useState } from 'react'
-import { useNavigate} from 'react-router-dom'
-import api from '../api'
-import { ACCESS_TOKEN,REFRESH_TOKEN } from '../constants'
-import Loader from '../components/Loader'
+import React, { useState } from 'react';
+import { useNavigate} from 'react-router-dom';
+import api from '../services/api';
+import { ACCESS_TOKEN,REFRESH_TOKEN } from '../constants';
+import Loader from '../components/Loader';
+import '../styles/login.css';
 
 const Login = () => {
   const[username,setUsername]=useState("")
@@ -18,8 +18,8 @@ const Login = () => {
     try {
         const res =await api.post("/account/api/token/",{username,password})
         if(res.status===200){
-            localStorage.setItem(ACCESS_TOKEN,res.data.access)
-            localStorage.setItem(REFRESH_TOKEN,res.data.refresh)
+            sessionStorage.setItem(ACCESS_TOKEN,res.data.access)
+            sessionStorage.setItem(REFRESH_TOKEN,res.data.refresh)
             navigate('/')
         }else{
             navigate('/login')
@@ -32,7 +32,7 @@ const Login = () => {
     }
   }
   return (
-    <div>
+    <div className='login'>
       <h1>Login</h1>
       <form onSubmit={handleSubmit} className='form-container'>
           <input 
